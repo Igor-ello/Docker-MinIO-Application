@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center text-primary mb-4">Stored Files</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <ul class="list-group">
+            {% for file in files %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <!-- Отображение названия файла -->
+                <span>{{ file.name }}</span>
+                <!-- Кнопки для скачивания и удаления -->
+                <span>
+                    <a href="/download/{{ file.name }}" class="btn btn-sm btn-success">Download</a>
+                    <a href="/delete/{{ file.name }}" class="btn btn-sm btn-danger">Delete</a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<a href="/upload" class="btn btn-primary mt-3">Upload New File</a>
+{% endblock %}

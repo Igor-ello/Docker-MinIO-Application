@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center text-primary">Upload File</h1>
+<div class="card shadow-sm p-4">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">Choose File</label>
+            <input type="file" class="form-control" id="file" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Upload</button>
+    </form>
+</div>
+{% endblock %}
