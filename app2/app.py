@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from minio import Minio
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ minio_client = Minio(
 )
 
 bucket_name = "mybucket"
-
+processed_files = []  # Список для хранения информации о обработанных файлах
 
 @app.route("/process_file", methods=["POST"])
 def process_file():
@@ -23,9 +23,20 @@ def process_file():
     if not file_url:
         return "No file URL provided", 400
 
-    # Здесь можно добавить логику обработки файла
-    return f"File at {file_url} successfully received and processed"
+    # Логика обработки файла (можно добавить больше шагов обработки)
+    processed_files.append(file_url)
 
+    # Добавляем информацию о файле в список обработанных
+    return jsonify({
+        "message": f"File at {file_url} successfully received and processed",
+        "file_url": file_url
+    })
+
+
+@app.route("/")
+def index():
+    # Отображаем список обработанных файлов на главной странице
+    return render_template("index.html", processed_files=processed_files)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
