@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # MinIO сервис
   minio:
     image: minio/minio
     container_name: minio
@@ -14,19 +15,39 @@ services:
     volumes:
       - minio-data:/data
 
-  flask-app:
+  # Flask-приложение 1
+  flask-app1:
     build:
-      context: .
+      context: ./app1
       dockerfile: Dockerfile
-    container_name: flask-app
+    container_name: flask-app1
     ports:
       - "5000:5000"
     environment:
-      MINIO_ENDPOINT: minio:9000   # Подключение к MinIO через его имя контейнера
+      MINIO_ENDPOINT: minio:9000
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
+      APP2_URL: http://flask-app2:5001  # Адрес второго контейнера
     depends_on:
       - minio
+      - flask-app2
+    command: >
+      sh -c "sleep 5 && python app.py"
+
+  # Flask-приложение 2
+  flask-app2:
+    build:
+      context: ./app2
+      dockerfile: Dockerfile
+    container_name: flask-app2
+    ports:
+      - "5001:5001"
+    depends_on:
+      - minio
+    environment:
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
     command: >
       sh -c "sleep 5 && python app.py"
 

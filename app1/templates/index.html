@@ -6,12 +6,11 @@
         <ul class="list-group">
             {% for file in files %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <!-- Отображение названия файла -->
                 <span>{{ file.name }}</span>
-                <!-- Кнопки для скачивания и удаления -->
                 <span>
                     <a href="/download/{{ file.name }}" class="btn btn-sm btn-success">Download</a>
                     <a href="/delete/{{ file.name }}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="/send_to_app2/{{ file.name }}" class="btn btn-sm btn-info">Send to App2</a>
                 </span>
             </li>
             {% endfor %}
