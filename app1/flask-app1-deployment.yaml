@@ -18,7 +18,7 @@ spec:
       - name: flask-app1
         image: ig0rello/flask-app1:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 5001
         env:
         - name: MINIO_ENDPOINT
           value: "minio-service:9000"
@@ -34,9 +34,10 @@ kind: Service
 metadata:
   name: flask-app1-service
 spec:
+  type: NodePort
   ports:
-    - port: 5000
-      targetPort: 5000
+    - port: 5001
+      targetPort: 5001
+      nodePort: 30001
   selector:
     app: flask-app1
-  type: ClusterIP

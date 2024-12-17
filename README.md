@@ -23,5 +23,6 @@ kubectl get pods
 
 ## Проброс порта
 ```
-kubectl port-forward svc/flask-app1-service 5000:5000
+kubectl port-forward svc/flask-app1-service 5001:5001
+kubectl port-forward svc/flask-app2-service 5002:5002
 ```
