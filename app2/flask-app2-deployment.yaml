@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app2
+  labels:
+    app: flask-app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app2
+  template:
+    metadata:
+      labels:
+        app: flask-app2
+    spec:
+      containers:
+      - name: flask-app2
+        image: ig0rello/flask-app2:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: MINIO_ENDPOINT
+          value: "minio-service:9000"
+        - name: MINIO_ROOT_USER
+          value: "minioadmin"
+        - name: MINIO_ROOT_PASSWORD
+          value: "minioadmin"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app2-service
+spec:
+  ports:
+    - port: 5001
+      targetPort: 5001
+  selector:
+    app: flask-app2
+  type: ClusterIP
