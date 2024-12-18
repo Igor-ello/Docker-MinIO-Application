@@ -21,7 +21,7 @@ if not minio_client.bucket_exists(bucket_name):
     minio_client.make_bucket(bucket_name)
 
 # URL app2
-app2_url = os.getenv("APP2_URL", "http://flask-app2:5002")
+app2_url = os.getenv("APP2_URL", "http://flask-app2:5001")
 
 @app.route("/")
 def index():
@@ -69,4 +69,4 @@ def send_to_app2(filename):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
